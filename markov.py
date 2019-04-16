@@ -47,8 +47,9 @@ def make_chains(text_string):
         print(key_tuple)
         #Add key to dictionary and add following word as new value item in 
         #nested list
-        #print(chains.get(key_tuple,[]).append("could"))
-        #chains[key_tuple] = chains.get(key_tuple,[]) + [words_list[index+2]]
+        # print(chains.get(key_tuple,[]).append("could"))
+        chains[key_tuple] = chains.get(key_tuple,[]) + [words_list[index+2]]
+        print(chains)
         #Review other ways to append to list value within dictionary
 
     return chains
@@ -59,7 +60,6 @@ def make_text(chains):
 
     words = []
 
-    # your code goes here
 
     return " ".join(words)
 
@@ -68,10 +68,10 @@ input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
-print(input_text)
 
 # Get a Markov chain
 chains = make_chains(input_text)
+
 
 
 
