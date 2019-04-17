@@ -48,9 +48,16 @@ def make_chains(text_string):
         #Add key to dictionary and add following word as new value item in 
         #nested list
         # print(chains.get(key_tuple,[]).append("could"))
-        chains[key_tuple] = chains.get(key_tuple,[]) + [words_list[index+2]]
+        
+        chains[key_tuple] = chains.get(key_tuple, []) + [words_list[index+2]]
         #Review other ways to append to list value within dictionary
-
+        # if index equals to len(words_list) - 2, we will create a key tuple and set that to an empty list 
+        if words_list[index] == words_list[-3]:
+            #print("current index", index, words_list[index])
+            #Set last two words in list as key_tuple and set value = empty list (i.e.. (("I", "am"):[]))
+            key_tuple = (words_list[-2], words_list[-1])
+            chains[key_tuple] = [None]
+    print(chains)
     return chains
 
 
@@ -61,23 +68,34 @@ def make_text(chains):
 
     # set new key to the first key in chains
     new_key_tuple = choice(list(chains.keys()))
-    print(new_key_tuple, ": First Key Tuple")
+    #print(new_key_tuple, ": First Key Tuple")
     words.extend([new_key_tuple[0], new_key_tuple[1]])
+    # print(chains)
+    # print(len(words))
 
     # while the new key in chains, build words list
-    while new_key_tuple in chains:
+    while len(words) < 100:
+
         #     create a link which is a key from the dictionary and a random word from 
         #     the value list of the key
+        print(new_key_tuple, ": Inner Key Tuple")
         new_random_value = choice(chains.get(new_key_tuple))
+        if new_random_value == None:
+            break
         #print(new_random_value, ":random word")
         
-        #   add that random word to the words list 
-        words.append(new_random_value)
-        #print(words, ":Words List")
 
         #   create new key from second word in key and the random word from value 
         #   list of that key
         new_key_tuple = (new_key_tuple[1], new_random_value)
+        print(new_key_tuple)
+        print(len(words))
+
+        
+#       add that random word to the words list 
+        words.append(new_random_value)
+    print(words, ":Words List")
+
         #print(new_key_tuple, ": New Key tuple end")
         #break
     # print(type(new_key))
@@ -93,9 +111,6 @@ input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
 chains = make_chains(input_text)
-
-
-
 
 # Produce random text
 random_text = make_text(chains)
