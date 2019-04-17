@@ -44,12 +44,11 @@ def make_chains(text_string):
     #Create tuple from (i, i+1) 
     for index in range(len(words_list)-2):
         key_tuple = (words_list[index], words_list[index + 1])
-        print(key_tuple)
+        # print(key_tuple)
         #Add key to dictionary and add following word as new value item in 
         #nested list
         # print(chains.get(key_tuple,[]).append("could"))
         chains[key_tuple] = chains.get(key_tuple,[]) + [words_list[index+2]]
-        print(chains)
         #Review other ways to append to list value within dictionary
 
     return chains
@@ -60,6 +59,29 @@ def make_text(chains):
 
     words = []
 
+    # set new key to the first key in chains
+    new_key_tuple = choice(list(chains.keys()))
+    print(new_key_tuple, ": First Key Tuple")
+    words.extend([new_key_tuple[0], new_key_tuple[1]])
+
+    # while the new key in chains, build words list
+    while new_key_tuple in chains:
+        #     create a link which is a key from the dictionary and a random word from 
+        #     the value list of the key
+        new_random_value = choice(chains.get(new_key_tuple))
+        #print(new_random_value, ":random word")
+        
+        #   add that random word to the words list 
+        words.append(new_random_value)
+        #print(words, ":Words List")
+
+        #   create new key from second word in key and the random word from value 
+        #   list of that key
+        new_key_tuple = (new_key_tuple[1], new_random_value)
+        #print(new_key_tuple, ": New Key tuple end")
+        #break
+    # print(type(new_key))
+    #print(words, ":Words List ENNNNNDDD!!")
 
     return " ".join(words)
 
